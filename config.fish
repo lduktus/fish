@@ -1,4 +1,5 @@
-# helper functions
+### FUNCTIONS
+
 function __source
   if test -f $argv
     source $argv
@@ -10,16 +11,28 @@ end
 __source ~/.nix-profile/etc/profile.d/nix.fish
 
 
-# disable greeter
+### ENV
+set -gx PATH $HOME/.local/bin $PATH
+set -gx EDITOR vi
+
+# disable fishs greeter
 set -gx fish_greeting ''
 
+# disable emojis when using pipx
+set -gx USE_EMOJI false
+
+# prevent less from cluttering my $HOME
+set -gx LESSHISTSIZE 0
+set -gx LESSHISTFILE '/dev/null'
+
+
+# WSL specific settings
+#if test -n $WSL_DISTRO_NAME
+#
+#end
 
 # only for interactive sessions
 if status is-interactive
-
-    set -gx EDITOR vi
-    set -gx LESSHISTSIZE 0
-    set -gx LESSHISTFILE '/dev/null'
 
     # aliases
     alias mv 'mv -i'
@@ -58,12 +71,7 @@ if status is-interactive
         alias open 'xdg-open'
     end
 
-    # WSL specific settings
-    if test -n $WSL_DISTRO_NAME
-
-    end
 end
 
 # unset functions
 functions -e __source
-
